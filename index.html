@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Sterling Radisay</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+</head>
+<style>
+    :root {
+        --bg-color: #020618;
+        --text-color: #e5e7eb;
+    }
+
+    body {
+        padding:1rem;
+        font-family:Arial, Helvetica, sans-serif;
+        background:var(--bg-color);
+        opacity: 0;
+        animation: fadeInBody ease 500ms forwards;
+    }
+    @keyframes fadeInBody {
+        0% {
+            opacity: 0;
+        }
+        100% {
+            opacity: 1;
+        }
+    }
+    *{color:var(--text-color);}
+    @media (prefers-color-scheme: light) {
+        :root {
+            --bg-color:#eff6ff;
+            --text-color:#162456;
+        }
+    }
+    p{font-size:18px;}
+    .text-lg{font-size:20px;}
+    .text-xl{font-size:24px;}
+    .text-2xl{font-size:54px;}
+    .link{
+        border-left:var(--text-color) solid 2px;
+        padding-left:1rem;
+        text-decoration:None;
+        display:flex;
+        align-items: center;
+        gap:1rem;
+    }
+    .link:hover{
+        gap:1.5rem;
+    }
+    .nav-link{
+        background: transparent;
+        border:none;
+    }
+    .nav-link.active {
+        border-bottom:var(--text-color) inset 2px;
+    }
+    .nav-link:hover {
+        border-bottom:var(--text-color) inset 2px;
+        cursor: pointer;
+    }
+    .card {
+        transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
+        position: absolute;
+    }
+    .card-enter {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+
+    .card-exit {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+    .projects-grid {
+
+        width:100%;
+        display:grid;
+        gap:1rem;
+    }
+    @media (min-width: 1200px) {
+        .projects-grid {
+            grid-template-columns: 1fr 1fr; /* Two columns */
+        }
+    }
+    .project-card {
+        background:#fff;
+    }
+</style>
+<body>
+
+    <nav style="margin-bottom: 1rem;display:flex;justify-content: start; align-items: start; gap:1rem;" class="text-lg">
+        <button class="text-lg nav-link" id="nav-home" onclick="handleNavClick(this, 'home')">
+            🏠 home
+        </button>
+        <button class="text-lg nav-link" id="nav-projects"  onclick="handleNavClick(this, 'projects')">
+            📁 projects
+        </button>
+        <button class="text-lg nav-link" id="nav-resume"  onclick="handleNavClick(this, 'resume')">
+            💼 resume
+        </button>
+    </nav>
+
+    <div class="slider">
+        <div style="max-width:48rem;" id="home" class="card">
+            <h1 class="text-2xl"><strong>Hey 👋</strong></h1>
+            <h2>My name is Sterling Radisay</h2>
+            <p>
+                I’m a driven software developer currently pursuing a B.S. in Computer Science at UCI (grad. 2026) with a focus on Intelligent Systems. Since starting my professional career in 2020, I’ve primarily worked with Python, JavaScript, C++, and C#, building Flask microservices, Django applications, SPAs with Vue.js, and AI-driven solutions. I bring a strong work ethic fueled by 13 years of martial arts training to each project.
+            </p>
+            <a class="text-lg link" href="/projects">See my projects here <span>🡢</span></a>
+            <hr>
+            <p>
+                <strong class="text-xl">My experience</strong> includes founding a software company, Audit Quicker, where I created cloud-based auditing tools, and serving as a backend developer at American Vessel Documentation. Currently, I’m a full-stack engineer at Hyundai Technology, improving ecommerce platforms and boosting sales with AI.
+            </p>
+            <a class="text-lg link" href="/resume">Where I have worked <span>🡢</span></a>
+        </div>
+        <div id="projects" class="card projects-grid">
+            <div class="project-card">
+                projects
+            </div>
+            <div class="project-card">
+                projects
+            </div>
+            <div class="project-card">
+                projects
+            </div>
+            <div class="project-card">
+                projects
+            </div>
+        </div>
+        <div id="resume" class="card">
+            resume
+        </div>
+    </div>
+    <script>
+
+        function slide_in(card) {
+            card.classList.remove('card-exit');
+            card.classList.add('card-enter');
+            void card.offsetWidth;
+            card.classList.remove('card-enter');
+        }
+
+        function slide_out(card) {
+            card.classList.remove('card-enter');
+            card.classList.add('card-exit');
+        }
+
+        let current_page = window.location.pathname;
+
+        let home = document.getElementById('home');
+        let projects =document.getElementById('projects');
+        let resume = document.getElementById('resume');
+        let nav_home = document.getElementById('nav-home');
+        let nav_projects = document.getElementById('nav-projects');
+        let nav_resume = document.getElementById('nav-resume');
+
+        if (current_page === 'resume')
+        {
+            slide_out(home);
+            slide_out(projects);
+            slide_in(resume);
+            active_nav_link = nav_resume;
+
+        }
+        else if (current_page === 'projects')
+        {
+            slide_out(resume);
+            slide_out(home);
+            slide_in(projects);
+            active_nav_link = nav_projects;
+        }
+        else
+        {
+            slide_out(resume);
+            slide_out(projects);
+            slide_in(home);
+            active_nav_link = nav_home;
+        }
+        active_nav_link.classList.add('active');
+
+        function handleNavClick(element, card) {
+            active_nav_link.classList.remove('active');
+            element.className = "text-lg nav-link active";
+            active_nav_link = element;
+            let card_element = document.getElementById(card);
+            if (card !== 'home') slide_out(home);
+            if (card !== 'projects') slide_out(projects);
+            if (card !== 'resume') slide_out(resume);
+
+            slide_in(card_element);
+            // history.pushState({ page: card }, card, card !== 'home' ? `/${card}` : '/');
+        }
+    </script>
+</body>
+<script>
+
+</script>
+</html>

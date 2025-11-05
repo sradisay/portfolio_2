@@ -6,195 +6,158 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 </head>
 <style>
-    :root {
-        --bg-color: #020618;
-        --text-color: #e5e7eb;
+    * {
+        box-sizing: border-box;
+        color: #e5e7eb;
+        margin: 0;
+        padding: 0;
     }
-
     body {
-        padding:1rem;
-        font-family:Arial, Helvetica, sans-serif;
-        background:var(--bg-color);
+        padding: min(1rem, 5%);
+        font-family:Arial, sans-serif;
+        background: #020618;
         opacity: 0;
-        animation: fadeInBody ease 500ms forwards;
+        animation: fa ease 1s forwards;
+        min-height:100vh;
     }
-    @keyframes fadeInBody {
-        0% {
-            opacity: 0;
-        }
-        100% {
-            opacity: 1;
-        }
-    }
-    *{color:var(--text-color);}
-    @media (prefers-color-scheme: light) {
-        :root {
-            --bg-color:#eff6ff;
-            --text-color:#162456;
-        }
-    }
+    @keyframes fa {to {opacity: 1;} }
     p{font-size:18px;}
-    .text-lg{font-size:20px;}
-    .text-xl{font-size:24px;}
-    .text-2xl{font-size:54px;}
-    .link{
-        border-left:var(--text-color) solid 2px;
-        padding-left:1rem;
-        text-decoration:None;
-        display:flex;
-        align-items: center;
-        gap:1rem;
-    }
-    .link:hover{
-        gap:1.5rem;
-    }
-    .nav-link{
-        background: transparent;
-        border:none;
-    }
-    .nav-link.active {
-        border-bottom:var(--text-color) inset 2px;
-    }
-    .nav-link:hover {
-        border-bottom:var(--text-color) inset 2px;
-        cursor: pointer;
-    }
-    .card {
-        transition: transform 0.25s ease-in-out, opacity 0.25s ease-in-out;
-        position: absolute;
-    }
-    .card-enter {
-        transform: translateX(100%);
-        opacity: 0;
-    }
-
-    .card-exit {
-        transform: translateX(-100%);
-        opacity: 0;
-    }
     .projects-grid {
-
-        width:100%;
+        width: 100%;
         display:grid;
         gap:1rem;
     }
     @media (min-width: 1200px) {
         .projects-grid {
-            grid-template-columns: 1fr 1fr; /* Two columns */
+            grid-template-columns: 1fr 1fr;
         }
     }
-    .project-card {
-        background:#fff;
+    .card {
+        background: #020618;
+        border-radius: 8px;
+        position: relative;
+        padding: 1px;
+    }
+    .card-content {
+        height:100%;
+        background: #020618e6;
+        backdrop-filter: blur(8px);
+        border-radius: inherit;
+        padding: 1rem;
+    }
+    @property --gradient-angle {
+        syntax: '<angle>';
+        inherits: false;
+        initial-value: -45deg;
+    }
+    #pl {--c1: lime;--c2: lime;}
+    #bl {--c1: orangered;--c2: darkorange;}
+    #aq {--c1: dodgerblue;--c2: mediumvioletred;}
+    #fx {--c1: white;--c2: white;}
+    #pf {--c1: lightskyblue;--c2: deepskyblue;}
+    .card:before {
+        background: linear-gradient(var(--gradient-angle), transparent 5%, var(--c1) 25%, transparent 50%, var(--c2) 99%);
+        animation: rotate-gradient 10s linear infinite;
+        border-radius: inherit;
+        content: "";
+        inset: 0;
+        position: absolute;
+        z-index: 0;
+        animation-play-state: paused;
+    }
+    .card:hover:before {
+        animation-play-state: running;
+    }
+    @keyframes rotate-gradient {to {--gradient-angle: 315deg;}}
+    h2 {
+        margin-bottom: 1rem;
+    }
+    .col {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap:8px;
+    }
+    .d-f {
+        display: flex;
+        align-items: center;
+        justify-content: start;
+    }
+    .g16 {
+        gap: 16px;
+    }
+    .wrap {
+        flex-wrap: wrap;
+    }
+    .jc-c {
+        justify-content: center;
+    }
+    strong {
+        color: dodgerblue;
     }
 </style>
 <body>
-
-    <nav style="margin-bottom: 1rem;display:flex;justify-content: start; align-items: start; gap:1rem;" class="text-lg">
-        <button class="text-lg nav-link" id="nav-home" onclick="handleNavClick(this, 'home')">
-            🏠 home
-        </button>
-        <button class="text-lg nav-link" id="nav-projects"  onclick="handleNavClick(this, 'projects')">
-            📁 projects
-        </button>
-        <button class="text-lg nav-link" id="nav-resume"  onclick="handleNavClick(this, 'resume')">
-            💼 resume
-        </button>
-    </nav>
-
-    <div class="slider">
-        <div style="max-width:48rem;" id="home" class="card">
-            <h1 class="text-2xl"><strong>Hey 👋</strong></h1>
-            <h2>My name is Sterling Radisay</h2>
-            <p>
-                I’m a driven software developer currently pursuing a B.S. in Computer Science at UCI (grad. 2026) with a focus on Intelligent Systems. Since starting my professional career in 2020, I’ve primarily worked with Python, JavaScript, C++, and C#, building Flask microservices, Django applications, SPAs with Vue.js, and AI-driven solutions. I bring a strong work ethic fueled by 13 years of martial arts training to each project.
-            </p>
-            <a class="text-lg link" href="/projects">See my projects here <span>🡢</span></a>
-            <hr>
-            <p>
-                <strong class="text-xl">My experience</strong> includes founding a software company, Audit Quicker, where I created cloud-based auditing tools, and serving as a backend developer at American Vessel Documentation. Currently, I’m a full-stack engineer at Hyundai Technology, improving ecommerce platforms and boosting sales with AI.
-            </p>
-            <a class="text-lg link" href="/resume">Where I have worked <span>🡢</span></a>
-        </div>
-        <div id="projects" class="card projects-grid">
-            <div class="project-card">
-                projects
-            </div>
-            <div class="project-card">
-                projects
-            </div>
-            <div class="project-card">
-                projects
-            </div>
-            <div class="project-card">
-                projects
+    <div class="col">
+        <div class="d-f g16 wrap">
+            <h1>Sterling Radisay</h1>
+            <div class="d-f g16 jc-c">
+                <a href="https://www.linkedin.com/in/sradisay/" target="_blank" class="col">LinkedIn</a>
+                <a href="https://github.com/sradisay" target="_blank" class="col">Github</a>
+                <a href="https://localhost" target="_blank" class="col">Resume</a>
             </div>
         </div>
-        <div id="resume" class="card">
-            resume
+        <p>
+            Passionate programmer proficient in Python, C++, and Javascript. Professional experience working on
+            machine learning, IoT systems, and fullstack projects.
+        </p>
+        <br>
+        <div class="projects-grid">
+            <div class="card" id="aq">
+                <div class="card-content">
+                    <h2>Audit Quicker</h2>
+                    <p>
+                        B2B SaaS for auditors and accountants. Onboarded 3 organizations and 60+ users. Developed AI tools, management tools, Excel add-ins and more
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="bl">
+                <div class="card-content">
+                    <h2>Blaize</h2>
+                    <p>
+                        Wildfire monitoring platform inspired by a real evacuation. Built with Vue.js, Flask, and Redis.
+                        Features a Gemini-1.5 AI agent (via Deepgram) for real-time answers.
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="fx">
+                <div class="card-content">
+                    <h2>fill-xfa-pdfs</h2>
+                    <p>
+                        A Python library for programmatically filling dynamic XFA PDFs, a format not supported by
+                        standard form-filling tools. Built during my time at US Vessel Documentation.
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="pf">
+                <div class="card-content">
+                    <h2>this portfolio</h2>
+                    <p>
+                        This site. A sub-1.5KB, single-packet portfolio built with vanilla HTML/CSS. Deployed on a
+                        self-hosted VPS (Nginx, Docker) with Cloudflare CDN to prove that performance is a feature.
+                    </p>
+                </div>
+            </div>
+            <div class="card" id="pl">
+                <div class="card-content">
+                    <h2>Paperlink</h2>
+                    <p>
+                        A student writing platform with Git-like version control for every edit. I built the Django
+                        backend and a custom HTML/JS rich text editor. (Hackathon project).
+                    </p>
+                </div>
+            </div>
         </div>
     </div>
-    <script>
-
-        function slide_in(card) {
-            card.classList.remove('card-exit');
-            card.classList.add('card-enter');
-            void card.offsetWidth;
-            card.classList.remove('card-enter');
-        }
-
-        function slide_out(card) {
-            card.classList.remove('card-enter');
-            card.classList.add('card-exit');
-        }
-
-        let current_page = window.location.pathname;
-
-        let home = document.getElementById('home');
-        let projects =document.getElementById('projects');
-        let resume = document.getElementById('resume');
-        let nav_home = document.getElementById('nav-home');
-        let nav_projects = document.getElementById('nav-projects');
-        let nav_resume = document.getElementById('nav-resume');
-
-        if (current_page === 'resume')
-        {
-            slide_out(home);
-            slide_out(projects);
-            slide_in(resume);
-            active_nav_link = nav_resume;
-
-        }
-        else if (current_page === 'projects')
-        {
-            slide_out(resume);
-            slide_out(home);
-            slide_in(projects);
-            active_nav_link = nav_projects;
-        }
-        else
-        {
-            slide_out(resume);
-            slide_out(projects);
-            slide_in(home);
-            active_nav_link = nav_home;
-        }
-        active_nav_link.classList.add('active');
-
-        function handleNavClick(element, card) {
-            active_nav_link.classList.remove('active');
-            element.className = "text-lg nav-link active";
-            active_nav_link = element;
-            let card_element = document.getElementById(card);
-            if (card !== 'home') slide_out(home);
-            if (card !== 'projects') slide_out(projects);
-            if (card !== 'resume') slide_out(resume);
-
-            slide_in(card_element);
-            // history.pushState({ page: card }, card, card !== 'home' ? `/${card}` : '/');
-        }
-    </script>
 </body>
-<script>
-
-</script>
 </html>

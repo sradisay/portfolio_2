@@ -35,14 +35,14 @@
     }
     .card {
         background: #020618;
-        border-radius: 8px;
+        border-radius: 2px;
         position: relative;
         padding: 1px;
     }
     .card-content {
         height:100%;
-        background: #020618e6;
-        backdrop-filter: blur(8px);
+        background: #020618f6;
+        backdrop-filter: blur(12px);
         border-radius: inherit;
         padding: 1rem;
     }
@@ -57,7 +57,7 @@
     #fx {--c1: white;--c2: white;}
     #pf {--c1: lightskyblue;--c2: deepskyblue;}
     .card:before {
-        background: linear-gradient(var(--gradient-angle), transparent 5%, var(--c1) 25%, transparent 50%, var(--c2) 99%);
+        background: linear-gradient(var(--gradient-angle), var(--c1) 25%, transparent 50%, var(--c2) 99%);
         animation: rotate-gradient 10s linear infinite;
         border-radius: inherit;
         content: "";
